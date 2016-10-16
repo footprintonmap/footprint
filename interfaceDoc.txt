@@ -1,0 +1,48 @@
+===================================
+Sign up interface:
+----- Request -----
+URL: N/A
+Method: POST
+Data:
+{
+	'email': 'example@email.com',
+	'password': '12345678'
+}
+-----------------------------------
+----- Response -----
+success:
+{
+	'status': 200
+}
+
+fail:
+{
+	'status': 0
+	'errormsg':'bala bala ...'
+}
+===================================
+
+
+===================================
+Sign in interface:
+----- Request -----
+URL: N/A
+Method: POST
+Data:
+{
+	'email': 'example@email.com',
+	'password': '12345678'
+}
+-----------------------------------
+----- Response -----
+success:
+{
+	'status': 200
+}
+
+fail:
+{
+	'status': 0
+	'errormsg':'bala bala ...'
+}
+===================================
