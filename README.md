@@ -19,3 +19,8 @@ http://knockoutjs.com/
 * Install pysql: pip install pymysql
 * 常见问题: http://www.jianshu.com/p/776e72742c6e
 
+
+### ----- vv notes -----
+* django-extensions
+* django-cors-headers
+* django psycopg2
