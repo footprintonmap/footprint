@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    age = models.IntegerField(max_length=100)
+    age = models.IntegerField()
 
 
 class Album(models.Model):
