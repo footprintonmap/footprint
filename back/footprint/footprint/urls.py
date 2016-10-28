@@ -17,23 +17,34 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
-from rest_framework import routers
-# from rest_framework_jwt.views import obtain_jwt_token
-from api import views
-
-from django.views.decorators.csrf import csrf_exempt
-
-router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-router.register(r'album',views.AlbumViewSet)
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
+from api.views import(
+    IndexAPIView,
+    UserSignInAPIView,
+    UserSignUpAPIView,
+    AlbumCreateAPIView,
+    AlbumListAPIView,
+    AlbumRetrieveAPIView,
+    ImageCreateAPIView,
+    ImageRetrieveAPIView,
+)
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
+
+    url(r'^$', IndexAPIView.as_view(), name='index'),
+    url(r'^signup/$', UserSignUpAPIView.as_view(), name='signup'),
+    url(r'^signin/$', UserSignInAPIView.as_view(), name='signin'),
+
+    url(r'^api/album/create/$', AlbumCreateAPIView.as_view(), name='album_create'),
+    url(r'^api/album/$', AlbumListAPIView.as_view(), name='album_list'),
+    url(r'^api/album/(?P<pk>\d+)/$', AlbumRetrieveAPIView.as_view(), name='album_retrieve'),
+
+    url(r'^api/image/create/$', ImageCreateAPIView.as_view(), name='image_create'),
+    url(r'^api/image/(?P<pk>\d+)/$', ImageRetrieveAPIView.as_view(), name='image_retrieve'),
+    # url(r'^api/', include(router.urls), name='list_album'),
+
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # url(r'^api/album',views.ListCreateAlbum.as_view(), name = 'list_album')
-    # url(r'^', include(router.urls)),
-    # url(r'^api-token-auth/', obtain_jwt_token),
-    # url(r'^sign_up/', views.sign_up),
+    url(r'^auth/token', obtain_jwt_token),
+    url(r'^auth/refresh', refresh_jwt_token),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
