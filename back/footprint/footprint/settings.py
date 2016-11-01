@@ -39,11 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api.apps.ApiConfig',
-
     'corsheaders'
 ]
 
 MIDDLEWARE_CLASSES = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,9 +52,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # 'corsheaders.middleware.CorsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'footprint.urls'
@@ -141,7 +138,7 @@ USE_TZ = True
 STATIC_ROOT = '/home/ubuntu/footprint/back/footprint/static'
 STATIC_URL = '/static/'
 STATICFILES_DIR = (
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, '/home/ubuntu/footprint/back/footprint/static')
 )
 CORS_ORIGIN_ALLOW_ALL = True
 
