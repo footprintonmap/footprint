@@ -92,7 +92,7 @@ class AlbumListAPIView(ListAPIView):
 
 class AlbumCreateAPIView(CreateAPIView):
     serializer_class = AlbumCreateSerializer
-    permission_classes = [AlbumIsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(users=[self.request.user])
@@ -101,7 +101,7 @@ class AlbumCreateAPIView(CreateAPIView):
 class AlbumRetrieveAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
-    permission_classes = [AlbumIsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, AlbumIsOwnerOrReadOnly]
 
 
 class ImageCreateAPIView(CreateAPIView):
