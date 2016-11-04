@@ -53,10 +53,28 @@ class IndexAPIView(APIView):
         return Response(dic)
 
 
-class UserSignUpAPIView(CreateAPIView):
+class UserSignUpAPIView(APIView):
     serializer_class = UserSignUpSerializer
-    queryset = User.objects.all()
+    permission_classes = [AllowAny]
+    # queryset = User.objects.all()
 
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        serializer = UserSignUpSerializer(data=data)
+        if serializer.is_valid(raise_exception=False):
+            serializer.save()
+            new_data = serializer.data
+            return Response(new_data, status=HTTP_200_OK)
+        result = serializer.errors
+        if 'non_field_errors' in result:
+            result['msg'] = result['non_field_errors']
+        elif 'username' in result:
+            result['msg'] = result['username'][0]
+        elif 'email' in result:
+            result['msg'] = result['email'][0]
+        elif 'password' in result:
+            result['msg'] = result['password'][0]
+        return Response(result, status=HTTP_400_BAD_REQUEST)
 
 class UserSignInAPIView(APIView):
     permission_classes = [AllowAny]
@@ -65,10 +83,12 @@ class UserSignInAPIView(APIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         serializer = UserSignInSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid(raise_exception=False):
             new_data = serializer.data
             return Response(new_data, status=HTTP_200_OK)
-        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+        result = serializer.errors
+        result['msg'] = 'Incorrect email or password'
+        return Response(result, status=HTTP_400_BAD_REQUEST)
 
 
 class AlbumListAPIView(ListAPIView):

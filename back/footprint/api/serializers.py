@@ -15,7 +15,7 @@ class UserSignUpSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'token')
+        fields = ('id', 'username', 'email', 'password', 'token')
         extra_kwargs = {
             "password": {
                 "write_only": True
@@ -51,10 +51,13 @@ class UserSignInSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'token']
+        fields = ['id', 'username', 'email', 'password', 'token']
         extra_kwargs = {
             "password": {
                 "write_only": True
+            },
+            "username": {
+                "read_only": True
             }
         }
 
@@ -71,6 +74,8 @@ class UserSignInSerializer(ModelSerializer):
                 raise ValidationError('Incorrect password, please try again.')
 
         data['token'] = get_token(user_obj)['token']
+        data['username'] = user_obj.username
+        data['id'] = user_obj.id
         return data
 
 
