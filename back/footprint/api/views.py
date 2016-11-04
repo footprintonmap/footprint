@@ -126,10 +126,21 @@ class AlbumRetrieveAPIView(RetrieveUpdateDestroyAPIView):
 
 class ImageCreateAPIView(CreateAPIView):
     serializer_class = ImageSerializer
-    permission_classes = [ImageIsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, ImageIsOwnerOrReadOnly]
+
+    # def post(self, request, *args, **kwargs):
+    #     data = request.data
+    #     serializer = ImageSerializer(data=data)
+    #     if serializer.is_valid(raise_exception=False):
+    #         serializer.save()
+    #         return Response(serializer.data, status=HTTP_200_OK)
+    #     result = serializer.errors
+    #     if 'non_field_errors' in result:
+    #         result['msg'] = result['non_field_errors']
+    #     return Response(result, status=HTTP_400_BAD_REQUEST)
 
 
 class ImageRetrieveAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
-    permission_classes = [ImageIsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, ImageIsOwnerOrReadOnly]

@@ -23,5 +23,5 @@ class Image(models.Model):
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='/images')
     album = models.ForeignKey('Album', related_name='images')

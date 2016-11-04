@@ -88,7 +88,23 @@ class UserSerializer(ModelSerializer):
 class ImageSerializer(ModelSerializer):
     class Meta:
         model = Image
-        field = ('name', 'description', 'image')
+        field = ('name', 'description', 'image', 'album')
+
+    def create(self, validated_data):
+        name = validated_data['name']
+        description = validated_data['description']
+        image = validated_data['image']
+
+        album = validated_data['album']
+        image_obj = Image(
+            name=name,
+            description=description,
+            image=image,
+            album=album
+        )
+        image_obj.save()
+        return image_obj
+
 
 
 class AlbumSerializer(ModelSerializer):

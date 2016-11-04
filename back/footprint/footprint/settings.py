@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api.apps.ApiConfig',
-    'corsheaders'
+    'corsheaders',
+    'storages'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -143,3 +144,8 @@ STATICFILES_DIR = (
 CORS_ORIGIN_ALLOW_ALL = True
 
 
+AWS_ACCESS_KEY = 'AKIAJIPRVTSMUQV43ZPQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'footprintstatic'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
