@@ -30,8 +30,8 @@ class IndexAPIView(APIView):
     permission_classes = [IsAdminUser]
 
     def get(self, request):
-        host = 'http://127.0.0.1:8000/'
-        # host = 'http://ec2-52-212-250-18.eu-west-1.compute.amazonaws.com/'
+        # host = 'http://127.0.0.1:8000/'
+        host = 'http://ec2-52-212-250-18.eu-west-1.compute.amazonaws.com/'
         dic = {
             'api': {
                 'auth': {
