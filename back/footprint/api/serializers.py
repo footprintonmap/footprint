@@ -4,6 +4,7 @@ from rest_framework.serializers import (
     CharField,
     EmailField,
     ValidationError,
+    SerializerMethodField
 )
 from .models import *
 from django.db.models import Q
@@ -86,6 +87,7 @@ class UserSerializer(ModelSerializer):
 
 
 class ImageSerializer(ModelSerializer):
+
     class Meta:
         model = Image
         fields = ('name', 'description', 'image', 'album')
@@ -105,6 +107,11 @@ class ImageSerializer(ModelSerializer):
         image_obj.save()
         return image_obj
 
+    def validate(self, data):
+        album = data['album']
+        if not self.context['request'].user in album.users.all():
+            raise ValidationError('You are not the owner')
+        return data
 
 class GeoSerializer(ModelSerializer):
 

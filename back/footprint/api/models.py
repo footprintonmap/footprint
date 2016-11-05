@@ -24,6 +24,9 @@ class Album(models.Model):
     class Meta:
         ordering = ('created',)
 
+    def __str__(self):
+        return '%s: %s' % (self.id, self.name)
+
 
 class Image(models.Model):
     name = models.CharField(blank=True, max_length=100)
