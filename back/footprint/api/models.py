@@ -7,12 +7,19 @@ class Profile(models.Model):
     age = models.IntegerField()
 
 
+class Geo(models.Model):
+    name = models.CharField(max_length=100)
+    lat = models.DecimalField(max_digits=10, decimal_places=7)
+    lng = models.DecimalField(max_digits=10, decimal_places=7)
+
+
 class Album(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     users = models.ManyToManyField('auth.User', related_name='albums')
+    geo = models.OneToOneField(Geo)
 
     class Meta:
         ordering = ('created',)

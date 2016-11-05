@@ -8,7 +8,6 @@ from api.serializers import (
     AlbumCreateSerializer,
     ImageSerializer,
 )
-from django.contrib.auth.models import User
 from rest_framework.permissions import (
     AllowAny,
     IsAuthenticatedOrReadOnly,

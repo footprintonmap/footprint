@@ -28,3 +28,4 @@ http://knockoutjs.com/
 s3 config:
 * get aws access key: http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html
 * set s3 auth: http://martinbrochhaus.com/s3.html
+* config aws http://docs.aws.amazon.com/cli/latest/userguide/tutorial-ec2-ubuntu.html

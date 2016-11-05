@@ -88,7 +88,7 @@ class UserSerializer(ModelSerializer):
 class ImageSerializer(ModelSerializer):
     class Meta:
         model = Image
-        field = ('name', 'description', 'image', 'album')
+        fields = ('name', 'description', 'image', 'album')
 
     def create(self, validated_data):
         name = validated_data['name']
@@ -106,23 +106,42 @@ class ImageSerializer(ModelSerializer):
         return image_obj
 
 
+class GeoSerializer(ModelSerializer):
+
+    class Meta:
+        model = Geo
+        fields = ('id', 'name', 'lat', 'lng')
+
 
 class AlbumSerializer(ModelSerializer):
     users = UserSerializer(many=True, read_only=True)
     images = ImageSerializer(many=True, read_only=True)
+    geo = GeoSerializer(many=False, read_only=True)
 
     class Meta:
         model = Album
-        fields = ('id', 'name', 'description', 'created', 'modified', 'users', 'images')
+        fields = ('id', 'name', 'description', 'created', 'modified', 'users', 'images', 'geo')
 
 
 class AlbumCreateSerializer(ModelSerializer):
     users = PrimaryKeyRelatedField(many=True, read_only=True)
     images = ImageSerializer(many=True, read_only=True)
+    geo = GeoSerializer(many=False)
 
     class Meta:
         model = Album
-        fields = ('id', 'name', 'description', 'created', 'modified', 'users', 'images')
+        fields = ('id', 'name', 'description', 'created', 'modified', 'users', 'images', 'geo')
 
+    def create(self, validated_data):
+        geo = validated_data['geo']
 
-# 07764 277 123 (oli bell)
+        geo_obj = Geo(
+            name=geo['name'],
+            lat=geo['lat'],
+            lng=geo['lng']
+        )
+        geo_obj.save()
+        validated_data.pop('geo')
+        validated_data['geo']=geo_obj
+
+        return super(AlbumCreateSerializer, self).create(validated_data)
