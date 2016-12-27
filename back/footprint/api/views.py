@@ -1,4 +1,5 @@
 from api.models import Album, Image
+from .models import *
 from api.auth import ImageIsOwnerOrReadOnly, AlbumIsOwnerOrReadOnly
 from django.db.models import Q
 from api.serializers import (
@@ -7,11 +8,13 @@ from api.serializers import (
     AlbumSerializer,
     AlbumCreateSerializer,
     ImageSerializer,
+    UserSerializer
 )
 from rest_framework.permissions import (
     AllowAny,
     IsAuthenticatedOrReadOnly,
     IsAdminUser,
+    IsAuthenticated
 )
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
@@ -22,6 +25,7 @@ from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
+    RetrieveAPIView
 )
 from rest_framework.filters import SearchFilter, OrderingFilter
 
@@ -51,6 +55,15 @@ class IndexAPIView(APIView):
         }
         return Response(dic)
 
+class UserAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        uid = str(self.request.user.id)
+        print(uid+"!!!!!!!!!!!!!!!")
+        query_list = User.objects.filter(id = uid)
+        return query_list
 
 class UserSignUpAPIView(APIView):
     serializer_class = UserSignUpSerializer
