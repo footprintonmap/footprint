@@ -27,6 +27,7 @@ from api.views import(
     AlbumRetrieveAPIView,
     ImageCreateAPIView,
     ImageRetrieveAPIView,
+    UserAPIView
 )
 
 urlpatterns = [
@@ -36,6 +37,7 @@ urlpatterns = [
     url(r'^signup/$', UserSignUpAPIView.as_view(), name='signup'),
     url(r'^signin/$', UserSignInAPIView.as_view(), name='signin'),
 
+    url(r'^api/getCurrUser$', UserAPIView.as_view(), name='getCurrUser$'),
     url(r'^api/album/create/$', AlbumCreateAPIView.as_view(), name='album_create'),
     url(r'^api/album/$', AlbumListAPIView.as_view(), name='album_list'),
     url(r'^api/album/(?P<pk>\d+)/$', AlbumRetrieveAPIView.as_view(), name='album_retrieve'),
