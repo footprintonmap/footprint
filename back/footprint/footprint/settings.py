@@ -122,7 +122,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-
+JWT_VERIFY_EXPIRATION = {
+    'JWT_VERIFY_EXPIRATION': False
+}
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
